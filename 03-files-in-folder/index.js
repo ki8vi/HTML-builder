@@ -14,7 +14,7 @@ fs.readdir(path.join(__dirname, 'secret-folder'), {
         fs.stat(path.join(__dirname, 'secret-folder', arrOfFiles[i].name))
           .then((res) => {
             const size = res.size;
-            const outputStr = `${base} - ${extention} - ${size}`;
+            const outputStr = `${base} - ${extention} - ${size}b`;
             process.stdout.write(outputStr + '\n');
           })
           .catch((err) => {
