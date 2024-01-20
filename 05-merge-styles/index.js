@@ -11,7 +11,7 @@ fs.readdir(path.join(__dirname, 'styles'), { withFileTypes: true })
             stylesDataArr.push(ch);
             fs.writeFile(
               path.join(__dirname, 'project-dist', 'bundle.css'),
-              stylesDataArr,
+              stylesDataArr.join('\n'),
             );
           })
           .catch((err) => process.stdout.write(err.message));
