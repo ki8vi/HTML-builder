@@ -47,12 +47,17 @@ function createPage() {
 function recursiveAddParts(parts, index, htmlFile) {
   if (parts.length > index) {
     const tagName = path.basename(parts[index], path.extname(parts[index]));
-    return fs
-      .readFile(path.join(__dirname, 'components', parts[index]))
-      .then((part) => {
-        htmlFile = htmlFile.replaceAll('{{' + tagName + '}}', part);
-        return recursiveAddParts(parts, index + 1, htmlFile);
-      });
+    if (path.extname(parts[index]) === '.html') {
+      return fs
+        .readFile(path.join(__dirname, 'components', parts[index]))
+        .then((part) => {
+          htmlFile = htmlFile.replaceAll('{{' + tagName + '}}', part);
+          return recursiveAddParts(parts, index + 1, htmlFile);
+        });
+    } else {
+      htmlFile = htmlFile.replaceAll('{{' + tagName + '}}', '');
+      return recursiveAddParts(parts, index + 1, htmlFile);
+    }
   } else {
     return Promise.resolve(htmlFile);
   }
